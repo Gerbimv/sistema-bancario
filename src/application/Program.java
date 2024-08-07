@@ -2,6 +2,8 @@ package application;
 
 import java.util.Locale;
 import java.util.Scanner;
+
+import bank.Account;
 import bank.ContaCorrente;
 import bank.ContaPoupanca;
 
@@ -110,7 +112,7 @@ public class Program {
 
         System.out.println("Insira o número da conta:");
         int number = sc.nextInt();
-        if (number == contaCorrente.getNumber()) {
+        if (number == contaCorrente.getAccountNumber()) {
             exibirMenuContaCorrente(contaCorrente, contaPoupanca);
         } else {
             System.out.println("Conta não encontrada!");
@@ -125,7 +127,7 @@ public class Program {
 
         System.out.println("Insira o número da conta:");
         int number = sc.nextInt();
-        if (number == contaPoupanca.getNumber()) {
+        if (number == contaPoupanca.getAccountNumber()) {
             exibirMenuContaPoupanca(contaPoupanca, contaCorrente);
         } else {
             System.out.println("Conta não encontrada!");
@@ -159,7 +161,7 @@ public class Program {
             case 3:
                 System.out.println("Qual o numero da conta que deseja transferir:");
                 int numberTransfer = sc.nextInt();
-                if (contaTransferencia != null && numberTransfer == contaTransferencia.getNumber()) {
+                if (contaTransferencia != null && numberTransfer == contaTransferencia.getAccountNumber()) {
                     System.out.println("Qual o valor que deseja transferir:");
                     amount = sc.nextDouble();
                     if (conta.withdraw(amount)) {
@@ -178,7 +180,7 @@ public class Program {
                 System.out.println("Opção inválida! Tente novamente.");
         }
     }
-    private static void exibirMenuContaPoupanca(ContaPoupanca conta, ContaCorrente contaTransferencia) {
+    private static void exibirMenuContaPoupanca(Account conta, Account account) {
         System.out.println(conta);
         System.out.println("1 - Sacar Dinheiro");
         System.out.println("2 - Depositar Dinheiro");
@@ -204,11 +206,11 @@ public class Program {
                 break;
             case 3:
                 System.out.println("Qual o numero da conta que deseja transferir:");
-                int numberTransfer = sc.nextInt();
-                if (contaTransferencia != null && numberTransfer == contaTransferencia.getNumber()) {
+                int accountTarget = sc.nextInt();
+                if (contaTransferencia != null && numberTransfer == contaTransferencia.getAccountNumber()) {
                     System.out.println("Qual o valor que deseja transferir:");
                     amount = sc.nextDouble();
-                    if (conta.withdraw(amount)) {
+                    if (conta.transfer(accountTarget ,amount)) {
                         contaTransferencia.deposit(amount);
                         System.out.println("Transferência Realizada");
                     } else {
